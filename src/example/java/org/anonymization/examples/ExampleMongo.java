@@ -43,7 +43,8 @@ public class ExampleMongo {
         ObjectMapper mapper = new ObjectMapper();
         MongoDatabase db = service.getDB();
         MongoCollection<Document> coll = db.getCollection(collectionName);
-        coll.drop();
+        if (coll.count() > 0)
+            coll.drop();
         ClassLoader classLoader = ExampleMongo.class.getClassLoader();
         JsonNode masterJSON = mapper.readTree(new File(
                 Objects.requireNonNull(classLoader.getResource("exampleMongoDBData.json"))
