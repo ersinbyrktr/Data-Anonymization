@@ -1,33 +1,41 @@
 package org.anonymization.examples;
 
+import static org.anonymization.examples.Example.data;
+import static org.anonymization.examples.Example.fields;
+import static org.anonymization.examples.Example.getResult;
+import static org.anonymization.examples.Example.processResults;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.CreateCollectionOptions;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.ValidationOptions;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Objects;
+import java.util.Scanner;
 import org.anonymization.repository.MongoDBService;
+import org.bson.BsonType;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.deidentifier.arx.ARXResult;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
-import static org.anonymization.examples.Example.*;
-
 public class ExampleMongo {
+
     final private static String connString = "mongodb://localhost:27017/test";
-    final private static List<Document> aggrQuery = getExampleQuery();
+    final private static String aggrQuery = getExampleQuery();
     final private static String collectionName = "privacy";
 
     public static void main(String[] args) throws IOException {
         MongoDBService service = new MongoDBService()
-                .setConnectionStringURI(connString)
-                .setCollectionName(collectionName)
-                .setFields(fields)
-                .setData(data)
-                .setQueryString(aggrQuery);
+            .setConnectionStringURI(connString)
+            .setCollectionName(collectionName)
+            .setFields(fields)
+            .setData(data)
+            .setQueryString(aggrQuery);
 
         service.connect();
 
@@ -43,26 +51,44 @@ public class ExampleMongo {
         ObjectMapper mapper = new ObjectMapper();
         MongoDatabase db = service.getDB();
         MongoCollection<Document> coll = db.getCollection(collectionName);
-        if (coll.count() > 0)
-            coll.drop();
-        ClassLoader classLoader = ExampleMongo.class.getClassLoader();
+        coll.drop();
+        createCollection(db);
+
         JsonNode masterJSON = mapper.readTree(new File(
-                Objects.requireNonNull(classLoader.getResource("exampleMongoDBData.json"))
-                        .getFile()
+            Objects.requireNonNull(ExampleMongo.class.getClassLoader().getResource("exampleMongoDBData.json"))
+                .getFile()
         ));
 
         masterJSON.iterator()
-                .forEachRemaining(e -> coll.insertOne(Document.parse(e.toString())));
+            .forEachRemaining(e -> coll.insertOne(Document.parse(e.toString())));
     }
 
-    private static List<Document> getExampleQuery() {
-        return Collections.singletonList(
-                new Document("$project", new Document("_id", 0)
-                        .append("name", 1)
-                        .append("age", 1)
-                        .append("disease", 1)
-                        .append("nationality", 1)
-                        .append("zip", "$address.zip"))
-        );
+    private static void createCollection(MongoDatabase db) {
+        Bson name = Filters.type("name", BsonType.STRING);
+        Bson age = Filters.type("age", BsonType.STRING);
+        Bson nationality = Filters.type("nationality", BsonType.STRING);
+        Bson disease = Filters.type("disease", BsonType.STRING);
+        Bson address = Filters.type("address", BsonType.DOCUMENT);
+        Bson city = Filters.type("address.city", BsonType.STRING);
+        Bson zip = Filters.type("address.zip", BsonType.STRING);
+        Bson country = Filters.type("address.country", BsonType.STRING);
+
+        Bson validator = Filters.and(name,age,nationality,disease,address,city,zip,country);
+        ValidationOptions validationOptions = new ValidationOptions()
+            .validator(validator);
+        db.createCollection(collectionName, new CreateCollectionOptions()
+            .validationOptions(validationOptions));
+    }
+
+    private static String getExampleQuery() {
+        try {
+            return new Scanner(new File(
+                Objects.requireNonNull(ExampleMongo.class.getClassLoader().getResource("exampleMongoDBQuery.json"))
+                    .getFile()
+            )).useDelimiter("\\Z").next();
+        } catch (FileNotFoundException | NullPointerException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

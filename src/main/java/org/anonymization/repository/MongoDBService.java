@@ -5,6 +5,7 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import java.util.Collections;
 import org.bson.Document;
 import org.deidentifier.arx.Data.DefaultData;
 
@@ -34,6 +35,13 @@ public class MongoDBService extends DBService<MongoDBService, Document> {
 
     public MongoDBService setQueryString(List<Document> queryString) {
         this.queryString = queryString;
+        return this;
+    }
+
+    public MongoDBService setQueryString(String queryString) {
+        this.queryString = Collections.singletonList(
+            Document.parse(queryString)
+        );
         return this;
     }
 

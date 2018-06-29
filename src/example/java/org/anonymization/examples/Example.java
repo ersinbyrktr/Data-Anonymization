@@ -76,8 +76,8 @@ class Example {
 
         data.getDefinition().setAttributeType("name", AttributeType.IDENTIFYING_ATTRIBUTE);
         data.getDefinition().setAttributeType("zip", zip);
-        data.getDefinition().setAttributeType("age", age);
-        data.getDefinition().setAttributeType("nationality", nationality);
+        data.getDefinition().setAttributeType("age", AttributeType.INSENSITIVE_ATTRIBUTE);
+        data.getDefinition().setAttributeType("nationality", AttributeType.INSENSITIVE_ATTRIBUTE);
         data.getDefinition().setAttributeType("disease", AttributeType.SENSITIVE_ATTRIBUTE);
         data.getDefinition().setDataType("age", DataType.DECIMAL);
         data.getDefinition().setDataType("zip", DataType.STRING);
