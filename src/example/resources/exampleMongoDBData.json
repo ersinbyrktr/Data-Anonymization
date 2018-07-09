@@ -1,35 +1,5 @@
 [
-  {
-    "name":"Sergej",
-    "age":null,
-    "nationality":"Russian",
-    "disease":"Heart Disease",
-    "address":{
-      "city":"New Delhi",
-      "zip":"13053",
-      "country":"India"
-    }
-  },{
-  "name":"Sergej",
-  "age":null,
-  "nationality":"Russian",
-  "disease":"Heart Disease",
-  "address":{
-    "city":"New Delhi",
-    "zip":"13053",
-    "country":"India"
-  }
-},{
-  "name":"Sergej",
-  "age":null,
-  "nationality":"Russian",
-  "disease":"Heart Disease",
-  "address":{
-    "city":"New Delhi",
-    "zip":"13053",
-    "country":"India"
-  }
-},{
+{
     "name":"Sergej",
     "age":"28",
     "nationality":"Russian",
