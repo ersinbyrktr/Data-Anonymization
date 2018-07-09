@@ -19,9 +19,9 @@ public class PostgresExample {
         DatabaseConfig postgresConf = new DatabaseConfig();
         String query = "select * from anon";
         postgresConf.setConnectStr("jdbc:postgresql://localhost:5432");
-        postgresConf.setDb("user_data");
-        postgresConf.setUser("root");
-        postgresConf.setPassword("root");
+        postgresConf.setDb("peng");
+        postgresConf.setUser("peng");
+        postgresConf.setPassword("admin");
 
         PostgresService ps = new PostgresService(postgresConf);
         Connection con = ps.getConnection();
@@ -46,9 +46,8 @@ public class PostgresExample {
 
         }
         data.getDefinition().setAttributeType("zip",ps.createHierarchy(con,"zip","anon"));
-
+        data.getDefinition().setAttributeType("age",ps.createHierarchy(con,"age","anon"));
         ARXResult result = getResult();
         processResults(result);
-
     }
 }
