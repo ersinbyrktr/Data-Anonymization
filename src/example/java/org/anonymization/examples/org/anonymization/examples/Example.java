@@ -33,7 +33,7 @@ class Example {
 
     private static ARXConfiguration getExampleConfiguration() {
         ARXConfiguration config = ARXConfiguration.create();
-        config.addPrivacyModel(new KAnonymity(4));
+        config.addPrivacyModel(new KAnonymity(2));
         config.setSuppressionLimit(0.02d);
         config.addPrivacyModel(new DistinctLDiversity("disease", 3));
         //config.addPrivacyModel(new EqualDistanceTCloseness("disease", 0.2d));
@@ -50,6 +50,7 @@ class Example {
         // Define hierarchies
         AttributeType.Hierarchy.DefaultHierarchy age = AttributeType.Hierarchy.create();
         age.add("21", "<=40", "*");
+        // age.add("22", "<=40", "*");
         age.add("23", "<=40", "*");
         age.add("28", "<=40", "*");
         age.add("29", "<=40", "*");
@@ -68,6 +69,7 @@ class Example {
         zip.add("14850", "1485*", "148**", "14***", "1****", "*****");
         zip.add("14853", "1485*", "148**", "14***", "1****", "*****");
 
+
         AttributeType.Hierarchy.DefaultHierarchy nationality = AttributeType.Hierarchy.create();
         nationality.add("American", "*");
         nationality.add("Russian", "*");
@@ -76,8 +78,8 @@ class Example {
 
         data.getDefinition().setAttributeType("name", AttributeType.IDENTIFYING_ATTRIBUTE);
         data.getDefinition().setAttributeType("zip", zip);
-        data.getDefinition().setAttributeType("age", AttributeType.INSENSITIVE_ATTRIBUTE);
-        data.getDefinition().setAttributeType("nationality", AttributeType.INSENSITIVE_ATTRIBUTE);
+        data.getDefinition().setAttributeType("age", age);
+        data.getDefinition().setAttributeType("nationality", nationality);
         data.getDefinition().setAttributeType("disease", AttributeType.SENSITIVE_ATTRIBUTE);
         data.getDefinition().setDataType("age", DataType.DECIMAL);
         data.getDefinition().setDataType("zip", DataType.STRING);
