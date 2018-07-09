@@ -37,11 +37,9 @@ public class MySqlExample {
             while (rs.next()){
                 String[] vals = new String[maxCols];
                 for (int i = 1; i <= maxCols; i++) {
-                    if(rs.getString(i)==null){
-                        vals[i - 1] = "empty";
-                    }else{
+
                         vals[i - 1] = rs.getString(i);
-                    }
+
                 }
                 data.add(vals);
             }

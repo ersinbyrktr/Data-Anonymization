@@ -79,8 +79,8 @@ public class MySqlService {
                        hierarchy.add(valHierarchy);
                    }else{
                        String[] valHierarchy = new String[3];
-                       valHierarchy[0] = "empty";
-                       valHierarchy[1] = "empty";
+                       valHierarchy[0] = "NULL";
+                       valHierarchy[1] = "NULL";
                        valHierarchy[2] = "*";
                        hierarchy.add(valHierarchy);
                    }
