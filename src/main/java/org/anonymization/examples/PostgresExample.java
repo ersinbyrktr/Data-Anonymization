@@ -2,6 +2,7 @@ package org.anonymization.examples;
 
 import org.anonymization.repository.DatabaseConfig;
 import org.anonymization.repository.PostgresService;
+import org.anonymization.repository.RangeCondition;
 import org.deidentifier.arx.ARXResult;
 
 import java.io.IOException;
@@ -43,10 +44,12 @@ public class PostgresExample {
                 }
                 data.add(vals);
             }
-
         }
-        data.getDefinition().setAttributeType("zip",ps.createHierarchy(con,"zip","anon"));
-        data.getDefinition().setAttributeType("age",ps.createHierarchy(con,"age","anon"));
+        data.getDefinition().setAttributeType("zip",ps.createStarHierarchy(con,"zip","anon"));
+
+        RangeCondition rc=new RangeCondition(40,"<","<40","*");
+        RangeCondition rc1=new RangeCondition(40,">=",">=40","*");
+        data.getDefinition().setAttributeType("age",ps.createRangeHierarchy(con,"age","anon",rc,rc1));
         ARXResult result = getResult();
         processResults(result);
     }
