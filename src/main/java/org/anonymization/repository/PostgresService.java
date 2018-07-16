@@ -1,11 +1,8 @@
 package org.anonymization.repository;
 
-import org.deidentifier.arx.AttributeType;
-
-import javax.swing.text.Document;
 import java.sql.*;
 
-public class PostgresService extends RealationDBService {
+public class PostgresService extends RelationalDBService {
     private static DatabaseConfig dbconfig =null;
         static {
             try {

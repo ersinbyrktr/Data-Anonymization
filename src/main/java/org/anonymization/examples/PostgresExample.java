@@ -27,6 +27,7 @@ public class PostgresExample {
         PostgresService ps = new PostgresService(postgresConf);
         Connection con = ps.getConnection();
         ResultSet rs = ps.executeQuery(con,query);
+//        ResultSet rs = ps.executeQueryWithSuppression(con,4,query,"anon","disease");
 
         if (rs!=null){
             ResultSetMetaData rsmd =rs.getMetaData();

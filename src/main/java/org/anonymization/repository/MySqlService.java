@@ -1,10 +1,8 @@
 package org.anonymization.repository;
 
-import org.deidentifier.arx.AttributeType;
-
 import java.sql.*;
 
-public class MySqlService extends RealationDBService {
+public class MySqlService extends RelationalDBService {
     private static DatabaseConfig dbconfig = null;
 
     static {

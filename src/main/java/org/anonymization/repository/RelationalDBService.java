@@ -1,6 +1,7 @@
 package org.anonymization.repository;
 
 import org.deidentifier.arx.AttributeType;
+import org.postgresql.core.SqlCommand;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 
-public class RealationDBService {
+public class RelationalDBService {
     /*
     Creates start hierarachy for the given input column as required by ARX
     Example: for zip 123
@@ -125,6 +126,34 @@ public class RealationDBService {
               Arrays.fill(retVal,"*");
         }
         return retVal;
+    }
+
+    public ResultSet executeQueryWithSuppression(Connection con,int l,String query,String table, String... cols){
+        StringBuilder sb=new StringBuilder();
+        sb.append("select * from (select ");
+        sb.append(String.join(",",cols));
+        sb.append(" from ").append(table).append(" group by ").append(String.join(",",cols)).append(" having count(*)>=").append(l);
+        sb.append(") b join ").append(table).append(" a on ");
+        StringBuilder joinCond=new StringBuilder();
+        for(int i=0;i<cols.length;i++){
+            joinCond.append("a."+cols[i]+"=b."+cols[i]);
+            if (i+1!=cols.length){
+               joinCond.append(" and ");
+            }
+        }
+
+        sb.append(joinCond.toString());
+
+        System.out.println(sb.toString());
+        Statement st;
+        try {
+            st = con.createStatement();
+            return st.executeQuery(sb.toString());
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
 }
