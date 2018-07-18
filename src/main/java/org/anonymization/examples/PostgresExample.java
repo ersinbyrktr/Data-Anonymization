@@ -2,6 +2,7 @@ package org.anonymization.examples;
 
 import org.anonymization.repository.DatabaseConfig;
 import org.anonymization.repository.PostgresService;
+import org.anonymization.repository.RangeCondition;
 import org.deidentifier.arx.ARXResult;
 
 import java.io.IOException;
@@ -19,13 +20,14 @@ public class PostgresExample {
         DatabaseConfig postgresConf = new DatabaseConfig();
         String query = "select * from anon";
         postgresConf.setConnectStr("jdbc:postgresql://localhost:5432");
-        postgresConf.setDb("user_data");
-        postgresConf.setUser("root");
-        postgresConf.setPassword("root");
+        postgresConf.setDb("peng");
+        postgresConf.setUser("peng");
+        postgresConf.setPassword("admin");
 
         PostgresService ps = new PostgresService(postgresConf);
         Connection con = ps.getConnection();
         ResultSet rs = ps.executeQuery(con,query);
+//        ResultSet rs = ps.executeQueryWithSuppression(con,4,query,"anon","disease");
 
         if (rs!=null){
             ResultSetMetaData rsmd =rs.getMetaData();
@@ -43,12 +45,13 @@ public class PostgresExample {
                 }
                 data.add(vals);
             }
-
         }
-        data.getDefinition().setAttributeType("zip",ps.createHierarchy(con,"zip","anon"));
+        data.getDefinition().setAttributeType("zip",ps.createStarHierarchy(con,"zip","anon"));
 
+        RangeCondition rc=new RangeCondition(40,"<","<40","*");
+        RangeCondition rc1=new RangeCondition(40,">=",">=40","*");
+        data.getDefinition().setAttributeType("age",ps.createRangeHierarchy(con,"age","anon",rc,rc1));
         ARXResult result = getResult();
         processResults(result);
-
     }
 }

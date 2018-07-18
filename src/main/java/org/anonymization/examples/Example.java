@@ -35,7 +35,7 @@ class Example {
         ARXConfiguration config = ARXConfiguration.create();
         config.addPrivacyModel(new KAnonymity(2));
         config.setSuppressionLimit(0.02d);
-        config.addPrivacyModel(new DistinctLDiversity("disease", 3));
+        config.addPrivacyModel(new DistinctLDiversity("disease", 2));
         //config.addPrivacyModel(new EqualDistanceTCloseness("disease", 0.2d));
         return config;
     }
@@ -50,7 +50,7 @@ class Example {
         // Define hierarchies
         AttributeType.Hierarchy.DefaultHierarchy age = AttributeType.Hierarchy.create();
         age.add("21", "<=40", "*");
-        // age.add("22", "<=40", "*");
+        age.add("22", "<=40", "*");
         age.add("23", "<=40", "*");
         age.add("28", "<=40", "*");
         age.add("29", "<=40", "*");

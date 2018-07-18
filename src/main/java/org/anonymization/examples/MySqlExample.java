@@ -45,7 +45,7 @@ public class MySqlExample {
             }
 
         }
-        data.getDefinition().setAttributeType("zip",ps.createHierarchy(con,"zip","anon"));
+        data.getDefinition().setAttributeType("zip",ps.createStarHierarchy(con,"zip","anon"));
 
         ARXResult result = getResult();
         processResults(result);
