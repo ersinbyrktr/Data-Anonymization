@@ -10,17 +10,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.CreateCollectionOptions;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.ValidationOptions;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 import org.anonymization.repository.MongoDBService;
-import org.bson.BsonType;
 import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.deidentifier.arx.ARXResult;
 
 public class ExampleMongo {

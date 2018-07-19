@@ -29,23 +29,7 @@ public class PostgresExample {
         ResultSet rs = ps.executeQuery(con,query);
 //        ResultSet rs = ps.executeQueryWithSuppression(con,4,query,"anon","disease");
 
-        if (rs!=null){
-            ResultSetMetaData rsmd =rs.getMetaData();
-            int maxCols = rsmd.getColumnCount();
-            String[] cols= new String[maxCols];
-            for(int i=1;i<=maxCols;i++){
-                cols[i-1]=rsmd.getColumnName(i);
-            }
-
-            data.add(cols);
-            while (rs.next()){
-                String[] vals = new String[maxCols];
-                for (int i = 1; i <= maxCols; i++) {
-                    vals[i-1] = rs.getString(i);
-                }
-                data.add(vals);
-            }
-        }
+        MySqlExample.processResult(rs);
         data.getDefinition().setAttributeType("zip",ps.createStarHierarchy(con,"zip","anon"));
 
         RangeCondition rc=new RangeCondition(40,"<","<40","*");
