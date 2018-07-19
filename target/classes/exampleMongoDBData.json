@@ -1,0 +1,134 @@
+[
+{
+    "name":"Sergej",
+    "age":"28",
+    "nationality":"Russian",
+    "disease":"Heart Disease",
+    "address":{
+      "city":"New Delhi",
+      "zip":"13053",
+      "country":"India"
+    }
+  },
+  {
+    "name":"Venkat",
+    "age":"29",
+    "nationality":"American",
+    "disease":"Heart Disease",
+    "address":{
+      "city":"London",
+      "zip":"13068",
+      "country":"UK"
+    }
+  },
+  {
+    "name":"Ersin",
+    "age":"21",
+    "nationality":"Japanese",
+    "disease":"Viral Infection",
+    "address":{
+      "city":"Berlin",
+      "zip":"13068",
+      "country":"Germany"
+    }
+  },
+  {
+    "name":"Peter",
+    "age":"23",
+    "nationality":"American",
+    "disease":"Viral Infection",
+    "address":{
+      "city":"New Delhi",
+      "zip":"13053",
+      "country":"India"
+    }
+  },
+  {
+    "name":"Katherina",
+    "age":"50",
+    "nationality":"Indian",
+    "disease":"Cancer",
+    "address":{
+      "city":"London",
+      "zip":"14853",
+      "country":"UK"
+    }
+  },
+  {
+    "name":"Ubaranda",
+    "age":"55",
+    "nationality":"Russian",
+    "disease":"Heart Disease",
+    "address":{
+      "city":"Berlin",
+      "zip":"14853",
+      "country":"Germany"
+    }
+  },
+  {
+    "name":"Cali",
+    "age":"47",
+    "nationality":"American",
+    "disease":"Viral Infection",
+    "address":{
+      "city":"London",
+      "zip":"14850",
+      "country":"UK"
+    }
+  },
+  {
+    "name":"Francise",
+    "age":"49",
+    "nationality":"American",
+    "disease":"Viral Infection",
+    "address":{
+      "city":"Berlin",
+      "zip":"14850",
+      "country":"Germany"
+    }
+  },
+  {
+    "name":"Emanuel",
+    "age":"31",
+    "nationality":"American",
+    "disease":"Cancer",
+    "address":{
+      "city":"London",
+      "zip":"13053",
+      "country":"UK"
+    }
+  },
+  {
+    "name":"Ural",
+    "age":"37",
+    "nationality":"Indian",
+    "disease":"Cancer",
+    "address":{
+      "city":"Berlin",
+      "zip":"13053",
+      "country":"Germany"
+    }
+  },
+  {
+    "name":"Harald",
+    "age":"36",
+    "nationality":"Japanese",
+    "disease":"Cancer",
+    "address":{
+      "city":"London",
+      "zip":"13068",
+      "country":"UK"
+    }
+  },
+  {
+    "name":"Turundu",
+    "age":"35",
+    "nationality":"American",
+    "disease":"Cancer",
+    "address":{
+      "city":"Berlin",
+      "zip":"13068",
+      "country":"Germany"
+    }
+  }
+]
