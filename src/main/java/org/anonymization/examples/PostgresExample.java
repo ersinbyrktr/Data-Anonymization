@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import static org.anonymization.examples.Example.processResults;
 
 public class PostgresExample {
-    public static void main(String[] args) throws IOException,SQLException {
+    public static void main(String[] args) throws IOException, SQLException {
 
         // Create Data as required by ARX
         Data.DefaultData data = Data.create();
@@ -41,22 +41,22 @@ public class PostgresExample {
 
         // Load the data from the table
         String query = "select * from anon";
-        ResultSet rs = ps.executeQuery(con,query);
+        ResultSet rs = ps.executeQuery(con, query);
 //        ResultSet rs = ps.executeQueryWithSuppression(con,4,query,"anon","disease");
 //
-        if (rs!=null){
-            ResultSetMetaData rsmd =rs.getMetaData();
+        if (rs != null) {
+            ResultSetMetaData rsmd = rs.getMetaData();
             int maxCols = rsmd.getColumnCount();
-            String[] cols= new String[maxCols];
-            for(int i=1;i<=maxCols;i++){
-                cols[i-1]=rsmd.getColumnName(i);
+            String[] cols = new String[maxCols];
+            for (int i = 1; i <= maxCols; i++) {
+                cols[i - 1] = rsmd.getColumnName(i);
             }
 
             data.add(cols);
-            while (rs.next()){
+            while (rs.next()) {
                 String[] vals = new String[maxCols];
                 for (int i = 1; i <= maxCols; i++) {
-                    vals[i-1] = rs.getString(i);
+                    vals[i - 1] = rs.getString(i);
                 }
                 data.add(vals);
             }
@@ -65,19 +65,19 @@ public class PostgresExample {
         // Define columns in data as Identity,sensitive,Quasi-identifiers etc
 
         // createStarHierarchy - Simplification done by us so that user doesn't require prior knowlege for generalization.
-        data.getDefinition().setAttributeType("zip",ps.createStarHierarchy(con,"zip","anon"));
+        data.getDefinition().setAttributeType("zip", ps.createStarHierarchy(con, "zip", "anon"));
 
         // RangeCondition is simplification to avoid data preprocessing by user.
-        RangeCondition rc=new RangeCondition(40,"<","<40","*");
-        RangeCondition rc1=new RangeCondition(40,">=",">=40","*");
-        data.getDefinition().setAttributeType("age",ps.createRangeHierarchy(con,"age","anon",rc,rc1));
+        RangeCondition rc = new RangeCondition(40, "<", "<40", "*");
+        RangeCondition rc1 = new RangeCondition(40, ">=", ">=40", "*");
+        data.getDefinition().setAttributeType("age", ps.createRangeHierarchy(con, "age", "anon", rc, rc1));
         data.getDefinition().setAttributeType("disease", AttributeType.SENSITIVE_ATTRIBUTE);
         data.getDefinition().setAttributeType("name", AttributeType.IDENTIFYING_ATTRIBUTE);
 
         // anonymize the data
 
         ARXAnonymizer anonymizer = new ARXAnonymizer();
-        ARXResult result= anonymizer.anonymize(data, config);
+        ARXResult result = anonymizer.anonymize(data, config);
         processResults(result);
     }
 }

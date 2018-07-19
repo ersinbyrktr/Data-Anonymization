@@ -1,0 +1,3 @@
+[submodule "arx"]
+	path = arx
+	url = https://github.com/arx-deidentifier/arx.git
