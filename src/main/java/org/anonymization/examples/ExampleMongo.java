@@ -25,7 +25,7 @@ import org.deidentifier.arx.ARXResult;
 
 public class ExampleMongo {
 
-    final private static String connString = "mongodb://18.196.64.199:27017/test";
+    final private static String connString = "mongodb://localhost:27017/test";
     final private static String aggrQuery = getExampleQuery();
     final private static String collectionName = "privacy";
 
@@ -64,20 +64,7 @@ public class ExampleMongo {
     }
 
     private static void createCollection(MongoDatabase db) {
-        Bson name = Filters.type("name", BsonType.STRING);
-        Bson age = Filters.type("age", BsonType.STRING);
-        Bson nationality = Filters.type("nationality", BsonType.STRING);
-        Bson disease = Filters.type("disease", BsonType.STRING);
-        Bson address = Filters.type("address", BsonType.DOCUMENT);
-        Bson city = Filters.type("address.city", BsonType.STRING);
-        Bson zip = Filters.type("address.zip", BsonType.STRING);
-        Bson country = Filters.type("address.country", BsonType.STRING);
-
-        Bson validator = Filters.and(name,age,nationality,disease,address,city,zip,country);
-        ValidationOptions validationOptions = new ValidationOptions()
-            .validator(validator);
-        db.createCollection(collectionName, new CreateCollectionOptions()
-            .validationOptions(validationOptions));
+        db.createCollection(collectionName, new CreateCollectionOptions());
     }
 
     private static String getExampleQuery() {
