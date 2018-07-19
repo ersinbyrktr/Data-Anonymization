@@ -1,16 +1,20 @@
 package org.anonymization.examples;
 
 import org.deidentifier.arx.*;
+import org.deidentifier.arx.Data.DefaultData;
 import org.deidentifier.arx.criteria.DistinctLDiversity;
 import org.deidentifier.arx.criteria.KAnonymity;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Iterator;
 
 class Example {
     final static String[] fields = getExampleFields();
-    final static Data.DefaultData data = getExampleData();
+    final static DefaultData data = getExampleData();
 
     static ARXResult getResult() throws IOException {
         ARXConfiguration config = getExampleConfiguration();
@@ -31,7 +35,27 @@ class Example {
         }
     }
 
-    private static ARXConfiguration getExampleConfiguration() {
+    static void addDataToARX(ResultSet rs) throws SQLException {
+        if (rs != null) {
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int maxCols = rsmd.getColumnCount();
+            String[] cols = new String[maxCols];
+            for (int i = 1; i <= maxCols; i++) {
+                cols[i - 1] = rsmd.getColumnName(i);
+            }
+
+            Example.data.add(cols);
+            while (rs.next()) {
+                String[] vals = new String[maxCols];
+                for (int i = 1; i <= maxCols; i++) {
+                    vals[i - 1] = rs.getString(i);
+                }
+                Example.data.add(vals);
+            }
+        }
+    }
+
+    static ARXConfiguration getExampleConfiguration() {
         ARXConfiguration config = ARXConfiguration.create();
         config.addPrivacyModel(new KAnonymity(2));
         config.setSuppressionLimit(0.02d);
@@ -44,8 +68,8 @@ class Example {
         return new String[]{"name", "zip", "age", "nationality", "disease"};
     }
 
-    private static Data.DefaultData getExampleData() {
-        Data.DefaultData data = Data.create();
+    private static DefaultData getExampleData() {
+        DefaultData data = Data.create();
 
         // Define hierarchies
         AttributeType.Hierarchy.DefaultHierarchy age = AttributeType.Hierarchy.create();

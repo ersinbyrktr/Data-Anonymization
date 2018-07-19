@@ -1,7 +1,7 @@
 package org.anonymization.repository;
 
 public class DatabaseConfig {
-    private String db,user,password,connectStr;
+    private String db, user, password, connectStr;
 
     public String getDb() {
         return db;

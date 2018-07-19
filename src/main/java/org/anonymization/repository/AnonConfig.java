@@ -9,5 +9,4 @@ public class AnonConfig {
     private String[] quasiAttributes;
 
 
-
 }

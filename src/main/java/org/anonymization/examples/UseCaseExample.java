@@ -5,8 +5,9 @@ import org.deidentifier.arx.criteria.DistinctLDiversity;
 import org.deidentifier.arx.criteria.KAnonymity;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Iterator;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 
 class UseCaseExample {
     final static String[] fields = getExampleFields();
@@ -20,15 +21,24 @@ class UseCaseExample {
         return anonymizer.anonymize(data, config);
     }
 
-    // Process results -> taken from ARX examples module
-    static void processResults(ARXResult result) {
-        System.out.println(" - Transformed data:");
-        DataHandle handle = result.getOutput(false);
-        handle.sort(false, 1);
-        Iterator<String[]> transformed = handle.iterator();
-        while (transformed.hasNext()) {
-            System.out.print("   ");
-            System.out.println(Arrays.toString(transformed.next()));
+
+    static void addDataToARX(ResultSet rs) throws SQLException {
+        if (rs != null) {
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int maxCols = rsmd.getColumnCount();
+            String[] cols = new String[maxCols];
+            for (int i = 1; i <= maxCols; i++) {
+                cols[i - 1] = rsmd.getColumnName(i);
+            }
+
+            UseCaseExample.data.add(cols);
+            while (rs.next()) {
+                String[] vals = new String[maxCols];
+                for (int i = 1; i <= maxCols; i++) {
+                    vals[i - 1] = rs.getString(i);
+                }
+                UseCaseExample.data.add(vals);
+            }
         }
     }
 

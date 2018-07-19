@@ -1,23 +1,21 @@
 package org.anonymization.examples;
 
-import static org.anonymization.examples.Example.data;
-import static org.anonymization.examples.Example.fields;
-import static org.anonymization.examples.Example.getResult;
-import static org.anonymization.examples.Example.processResults;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.CreateCollectionOptions;
+import org.anonymization.repository.MongoDBService;
+import org.bson.Document;
+import org.deidentifier.arx.ARXResult;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
-import org.anonymization.repository.MongoDBService;
-import org.bson.Document;
-import org.deidentifier.arx.ARXResult;
+
+import static org.anonymization.examples.Example.*;
 
 public class ExampleMongo {
 
@@ -27,11 +25,11 @@ public class ExampleMongo {
 
     public static void main(String[] args) throws IOException {
         MongoDBService service = new MongoDBService()
-            .setConnectionStringURI(connString)
-            .setCollectionName(collectionName)
-            .setFields(fields)
-            .setData(data)
-            .setQueryString(aggrQuery);
+                .setConnectionStringURI(connString)
+                .setCollectionName(collectionName)
+                .setFields(fields)
+                .setData(data)
+                .setQueryString(aggrQuery);
 
         service.connect();
 
@@ -51,12 +49,12 @@ public class ExampleMongo {
         createCollection(db);
 
         JsonNode masterJSON = mapper.readTree(new File(
-            Objects.requireNonNull(ExampleMongo.class.getClassLoader().getResource("exampleMongoDBData.json"))
-                .getFile()
+                Objects.requireNonNull(ExampleMongo.class.getClassLoader().getResource("exampleMongoDBData.json"))
+                        .getFile()
         ));
 
         masterJSON.iterator()
-            .forEachRemaining(e -> coll.insertOne(Document.parse(e.toString())));
+                .forEachRemaining(e -> coll.insertOne(Document.parse(e.toString())));
     }
 
     private static void createCollection(MongoDatabase db) {
@@ -66,8 +64,8 @@ public class ExampleMongo {
     private static String getExampleQuery() {
         try {
             return new Scanner(new File(
-                Objects.requireNonNull(ExampleMongo.class.getClassLoader().getResource("exampleMongoDBQuery.json"))
-                    .getFile()
+                    Objects.requireNonNull(ExampleMongo.class.getClassLoader().getResource("exampleMongoDBQuery.json"))
+                            .getFile()
             )).useDelimiter("\\Z").next();
         } catch (FileNotFoundException | NullPointerException e) {
             e.printStackTrace();

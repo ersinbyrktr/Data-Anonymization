@@ -5,11 +5,11 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import java.util.Collections;
 import org.bson.Document;
 import org.deidentifier.arx.Data.DefaultData;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.StreamSupport;
@@ -28,11 +28,6 @@ public class MongoDBService extends DBService<MongoDBService, Document> {
         return this;
     }
 
-    public MongoDBService setData(DefaultData data) {
-        this.data = data;
-        return this;
-    }
-
     public MongoDBService setQueryString(List<Document> queryString) {
         this.queryString = queryString;
         return this;
@@ -40,7 +35,7 @@ public class MongoDBService extends DBService<MongoDBService, Document> {
 
     public MongoDBService setQueryString(String queryString) {
         this.queryString = Collections.singletonList(
-            Document.parse(queryString)
+                Document.parse(queryString)
         );
         return this;
     }
@@ -79,6 +74,11 @@ public class MongoDBService extends DBService<MongoDBService, Document> {
 
     public DefaultData getData() {
         return data;
+    }
+
+    public MongoDBService setData(DefaultData data) {
+        this.data = data;
+        return this;
     }
 
     public MongoDatabase getDB() {
