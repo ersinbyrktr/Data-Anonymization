@@ -19,7 +19,7 @@ public class PostgresExample {
     public static void main(String[] args) throws IOException,SQLException {
         DatabaseConfig postgresConf = new DatabaseConfig();
         String query = "select * from anon";
-        postgresConf.setConnectStr("jdbc:postgresql://localhost:5432");
+        postgresConf.setConnectStr("jdbc:postgresql://18.185.114.122:5432");
         postgresConf.setDb("peng");
         postgresConf.setUser("peng");
         postgresConf.setPassword("admin");

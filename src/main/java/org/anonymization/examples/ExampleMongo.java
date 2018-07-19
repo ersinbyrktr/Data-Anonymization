@@ -25,7 +25,7 @@ import org.deidentifier.arx.ARXResult;
 
 public class ExampleMongo {
 
-    final private static String connString = "mongodb://18.196.64.199:27017/test";
+    final private static String connString = "mongodb://18.185.114.122:27017/test";
     final private static String aggrQuery = getExampleQuery();
     final private static String collectionName = "privacy";
 

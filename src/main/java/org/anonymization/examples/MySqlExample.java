@@ -16,10 +16,10 @@ public class MySqlExample {
     public static void main(String[] args) throws IOException,SQLException {
         DatabaseConfig mysqlConfig = new DatabaseConfig();
         String query = "select * from anon";
-        mysqlConfig.setConnectStr("jdbc:mysql://192.168.52.130:3306");
-        mysqlConfig.setDb("wordpress");
-        mysqlConfig.setUser("wordpress");
-        mysqlConfig.setPassword("wordpress");
+        mysqlConfig.setConnectStr("jdbc:mysql://18.185.114.122:3306");
+        mysqlConfig.setDb("peng");
+        mysqlConfig.setUser("peng");
+        mysqlConfig.setPassword("admin");
 
         MySqlService ps = new MySqlService(mysqlConfig);
         Connection con = ps.getConnection();
