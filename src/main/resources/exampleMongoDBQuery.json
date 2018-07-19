@@ -1,9 +1,0 @@
-{
-  "$project":{
-    "name":1,
-    "age":1,
-    "disease":1,
-    "nationality":1,
-    "zip":"$address.zip"
-  }
-}
