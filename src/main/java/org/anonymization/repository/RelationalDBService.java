@@ -156,4 +156,15 @@ public class RelationalDBService {
 
     }
 
+    public ResultSet executeQuery(Connection con, String query) {
+        Statement st;
+        try {
+            st = con.createStatement();
+            return st.executeQuery(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

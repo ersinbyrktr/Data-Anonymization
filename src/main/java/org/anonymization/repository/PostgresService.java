@@ -28,14 +28,4 @@ public class PostgresService extends RelationalDBService {
             return con;
         }
 
-        public ResultSet executeQuery(Connection con, String query){
-            Statement st;
-            try{
-            st=con.createStatement();
-            return  st.executeQuery(query);
-            }catch (Exception e){
-                e.printStackTrace();
-                return null;
-            }
-        }
 }
