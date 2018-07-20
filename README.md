@@ -13,62 +13,6 @@ Right clicking on lib/libarx-3.7.0.jar file and click on the “Add as Library..
 
 For Eclipse:
 Go to Properties (for the Project) -> Java Build Path -> Libraries , select lib/libarx-3.7.0.jar  and click on the source , there will be option to attach the source and Javadocs.
-## Database Setup
-### a) Local Database Setup
-To install the databases locally we provide a docker-compose file, which can be used to spawn all three required databases (mongodb, mysql and postgresql). For an alternative without docker see b). To start the docker containers execute “docker-compose run” in the console from the folder containing the “docker-compose.yml” file. This will start the containers locally and expose the needed ports. Please use for the connection address “localhost” or if docker runs on a VM, the IP of the VM. The full connection setting are as follows.
-
-- MongoDB
-    
-    ConnectStr = mongodb://localhost:27017/test
-    
-    Collection Name = privacy
-    
-- MySql
-    
-    ConnectStr  = jdbc:mysql://localhost:3306
-    
-    Db = peng
-
-    User = peng
-
-    Password = admin
-- Postgres
-
-    ConnectStr = jdbc:postgresql://localhost:5432
-    
-    Db = peng
-
-    User = peng
-
-    Password = admin
-
-### b) Remote Database Setup 
-For easier testing and in case docker is not available on the local machine we provide a hosted solution with all three databases deployed in the cloud (AWS ECS), which will be accessible until the end of the project. For that the connection settings are as followed.
-
-- MongoDB
-    
-    ConnectStr = mongodb://18.185.114.122:27017/test
-    
-    Collection Name = privacy
-    
-- MySql
-    
-    ConnectStr  = jdbc:mysql://18.185.114.122:3306
-    
-    Db = peng
-
-    User = peng
-
-    Password = admin
-- Postgres
-
-    ConnectStr = jdbc:postgresql://18.185.114.122:5432
-    
-    Db = peng
-
-    User = peng
-
-    Password = admin
   
 ## Preparing Database / Importing Data
 
