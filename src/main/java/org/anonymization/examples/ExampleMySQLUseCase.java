@@ -1,6 +1,6 @@
 package org.anonymization.examples;
 
-import org.anonymization.repository.DatabaseConfig;
+import org.anonymization.model.DatabaseConfig;
 import org.anonymization.repository.MySqlService;
 import org.anonymization.repository.RangeCondition;
 import org.deidentifier.arx.ARXResult;
@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.anonymization.examples.Example.processResults;
 import static org.anonymization.examples.UseCaseExample.*;
@@ -32,8 +33,8 @@ public class ExampleMySQLUseCase {
         addDataToARX(rs);
         data.getDefinition().setAttributeType("zip", ps.createStarHierarchy(con, "zip", "users"));
 
-        RangeCondition rc = new RangeCondition(40, "<", "<40", "*");
-        RangeCondition rc1 = new RangeCondition(40, ">=", ">=40", "*");
+        RangeCondition rc = new RangeCondition(40, "<", List.of("<40", "*"));
+        RangeCondition rc1 = new RangeCondition(40, ">=", List.of(">=40", "*"));
         data.getDefinition().setAttributeType("age", ps.createRangeHierarchy(con, "age", "users", rc, rc1));
         ARXResult result = getResult();
         processResults(result);

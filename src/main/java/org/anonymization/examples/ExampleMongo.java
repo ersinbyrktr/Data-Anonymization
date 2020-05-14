@@ -1,11 +1,11 @@
 package org.anonymization.examples;
 
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.CreateCollectionOptions;
 import org.anonymization.repository.MongoDBService;
+import org.bson.Document;
 import org.deidentifier.arx.ARXResult;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.anonymization.examples.Example.*;
 
@@ -21,7 +21,7 @@ public class ExampleMongo {
                 .setCollectionName(collectionName)
                 .setFields(fields)
                 .setData(data)
-                .setQueryString(aggrQuery);
+                .setQueryString(List.of(Document.parse(aggrQuery)));
 
         service.connect();
 
@@ -32,14 +32,15 @@ public class ExampleMongo {
     }
 
     private static String getExampleQuery() {
-        return "{\n" +
-                "  \"$project\":{\n" +
-                "    \"name\":1,\n" +
-                "    \"age\":1,\n" +
-                "    \"disease\":1,\n" +
-                "    \"nationality\":1,\n" +
-                "    \"zip\":\"$address.zip\"\n" +
-                "  }\n" +
-                "}";
+        return """
+                {
+                  "$project":{
+                    "name":1,
+                    "age":1,
+                    "disease":1,
+                    "nationality":1,
+                    "zip":"$address.zip"
+                  }
+                }""";
     }
 }

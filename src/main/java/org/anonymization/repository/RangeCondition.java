@@ -1,29 +1,20 @@
 package org.anonymization.repository;
 
+import lombok.Value;
+
+import java.util.List;
+
 /**
  * Currently supports only single condition like <,<=,= etc
  */
+@Value
 public class RangeCondition implements Comparable {
-    private int val;
-    private String operator;
-    private String[] hierarchies;
-
-    public RangeCondition(int val, String operator, String... hierarchies) {
-        this.val = val;
-        this.operator = operator;
-        this.hierarchies = hierarchies;
-    }
-
-    public int getVal() {
-        return val;
-    }
-
-    public String getOperator() {
-        return operator;
-    }
+    int val;
+    String operator;
+    List<String> hierarchies;
 
     public String[] getHierarchies() {
-        return hierarchies;
+        return hierarchies.toArray(String[]::new);
     }
 
     @Override

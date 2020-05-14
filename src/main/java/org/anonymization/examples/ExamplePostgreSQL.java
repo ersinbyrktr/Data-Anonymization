@@ -1,6 +1,6 @@
 package org.anonymization.examples;
 
-import org.anonymization.repository.DatabaseConfig;
+import org.anonymization.model.DatabaseConfig;
 import org.anonymization.repository.PostgresService;
 import org.anonymization.repository.RangeCondition;
 import org.deidentifier.arx.*;
@@ -10,12 +10,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.anonymization.examples.Example.getExampleConfiguration;
 import static org.anonymization.examples.Example.processResults;
 
 public class ExamplePostgreSQL {
-    private static Data.DefaultData data = Data.create();
+    private static final Data.DefaultData data = Data.create();
 
     public static void main(String[] args) throws IOException, SQLException {
         ARXConfiguration config = getExampleConfiguration();
@@ -38,15 +39,15 @@ public class ExamplePostgreSQL {
         processResults(result);
     }
 
-    private static void setHierarchy(PostgresService ps, Connection con) throws SQLException {
+    private static void setHierarchy(PostgresService ps, Connection con) {
         // Define columns in data as Identity,sensitive,Quasi-identifiers etc
 
         // createStarHierarchy - Simplification done by us so that user doesn't require prior knowlege for generalization.
         data.getDefinition().setAttributeType("zip", ps.createStarHierarchy(con, "zip", "anon"));
 
         // RangeCondition is simplification to avoid data preprocessing by user.
-        RangeCondition rc = new RangeCondition(40, "<", "<40", "*");
-        RangeCondition rc1 = new RangeCondition(40, ">=", ">=40", "*");
+        RangeCondition rc = new RangeCondition(40, "<", List.of("<40", "*"));
+        RangeCondition rc1 = new RangeCondition(40, ">=", List.of(">=40", "*"));
         data.getDefinition().setAttributeType("age", ps.createRangeHierarchy(con, "age", "anon", rc, rc1));
         data.getDefinition().setAttributeType("disease", AttributeType.SENSITIVE_ATTRIBUTE);
         data.getDefinition().setAttributeType("name", AttributeType.IDENTIFYING_ATTRIBUTE);

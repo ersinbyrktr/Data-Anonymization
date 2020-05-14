@@ -10,9 +10,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 class UseCaseExample {
-    final static String[] fields = getExampleFields();
     final static Data.DefaultData data = getExampleData();
-//    final static Data.DefaultData data = new Data.DefaultData();
 
     static ARXResult getResult() throws IOException {
         ARXConfiguration config = getExampleConfiguration();
@@ -49,10 +47,6 @@ class UseCaseExample {
         config.addPrivacyModel(new DistinctLDiversity("brand", 10));
 //        config.addPrivacyModel(new EqualDistanceTCloseness("disease", 0.2d));
         return config;
-    }
-
-    private static String[] getExampleFields() {
-        return new String[]{"name", "zip", "age", "nationality", "disease"};
     }
 
     private static Data.DefaultData getExampleData() {

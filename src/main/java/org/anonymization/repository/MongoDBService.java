@@ -9,13 +9,11 @@ import org.bson.Document;
 import org.deidentifier.arx.Data.DefaultData;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.StreamSupport;
 
 public class MongoDBService extends DBService<MongoDBService, Document> {
-    private MongoDatabase db;
     private MongoCollection<Document> coll;
     private List<Document> queryString;
     private String collectionName;
@@ -33,16 +31,9 @@ public class MongoDBService extends DBService<MongoDBService, Document> {
         return this;
     }
 
-    public MongoDBService setQueryString(String queryString) {
-        this.queryString = Collections.singletonList(
-                Document.parse(queryString)
-        );
-        return this;
-    }
-
     public void connect() {
         MongoClientURI mongoClientURI = new MongoClientURI(connectionStringURI);
-        db = new MongoClient(new MongoClientURI(connectionStringURI)).getDatabase(mongoClientURI.getDatabase());
+        MongoDatabase db = new MongoClient(new MongoClientURI(connectionStringURI)).getDatabase(mongoClientURI.getDatabase());
         coll = db.getCollection(collectionName);
     }
 
@@ -72,17 +63,9 @@ public class MongoDBService extends DBService<MongoDBService, Document> {
         return true;
     }
 
-    public DefaultData getData() {
-        return data;
-    }
-
     public MongoDBService setData(DefaultData data) {
         this.data = data;
         return this;
-    }
-
-    public MongoDatabase getDB() {
-        return db;
     }
 
     MongoDBService getSelf() {

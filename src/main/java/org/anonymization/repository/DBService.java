@@ -24,8 +24,4 @@ public abstract class DBService<T, R> {
     public abstract void executeQuery();
 
     abstract boolean verifyFields(R row) throws RuntimeException;
-
-    public DefaultData getData() {
-        return data;
-    }
 }

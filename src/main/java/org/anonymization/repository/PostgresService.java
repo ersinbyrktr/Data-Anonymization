@@ -1,11 +1,13 @@
 package org.anonymization.repository;
 
+import org.anonymization.model.DatabaseConfig;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class PostgresService extends RelationalDBService {
-    private static DatabaseConfig dbconfig = null;
+    private final DatabaseConfig dbConfig;
 
     static {
         try {
@@ -17,18 +19,17 @@ public class PostgresService extends RelationalDBService {
         }
     }
 
-    public PostgresService(DatabaseConfig dbconfig) {
-        this.dbconfig = dbconfig;
+    public PostgresService(DatabaseConfig dbConfig) {
+        this.dbConfig = dbConfig;
     }
 
     public Connection getConnection() {
-        Connection con = null;
         try {
-            con = DriverManager.getConnection(dbconfig.getConnectStr() + "/" + dbconfig.getDb(), dbconfig.getUser(), dbconfig.getPassword());
+            return DriverManager.getConnection(dbConfig.getConnectStr() + "/" + dbConfig.getDb(), dbConfig.getUser(), dbConfig.getPassword());
         } catch (SQLException sqle) {
             sqle.printStackTrace();
+            return null;
         }
-        return con;
     }
 
 }

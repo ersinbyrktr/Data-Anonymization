@@ -1,6 +1,6 @@
 package org.anonymization.examples;
 
-import org.anonymization.repository.DatabaseConfig;
+import org.anonymization.model.DatabaseConfig;
 import org.anonymization.repository.MySqlService;
 import org.deidentifier.arx.ARXResult;
 
